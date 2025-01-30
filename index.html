@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+            margin: 50px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .food {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #ff5733;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #e64c2e;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f1f1f1;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>What Should I Eat?</h1>
+        <div class="food" id="foodDisplay">Click the button to decide!</div>
+        <button onclick="selectFood()">Pick a Food</button>
+        
+    </div>
+
+    <script>    
+        let foods = ["Vadapav", "Samosa", "Dosu", "Uttapum", "Poha", "Upma", "Idli", "Puri Bhaji", "Bhel", "Pav Bhaji", "Misal Pav", "Pani Puri", "Noodles", "Triple Rice", "Daji cha rice", "Biryani", "Mishal", "Roll", "Pharathe", "Patis", "Thali", "Bhel", "Biryani","Paneer Bhaji","Matter Paneer","Chicken Thali","Machi Thali","Bread Omlet","Omlet",];
+
+
+
+
+
+
+
+
+
+        function updateFoodList() {
+            const foodList = document.getElementById("foodList");
+            foodList.innerHTML = "";
+            foods.forEach((food, index) => {
+                let li = document.createElement("li");
+                li.textContent = food;
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "X";
+                deleteBtn.classList.add("delete-btn");
+                deleteBtn.onclick = function () { removeFood(index); };
+                li.appendChild(deleteBtn);
+                foodList.appendChild(li);
+            });
+        }
+        function selectFood() {
+            if (foods.length === 0) {
+                document.getElementById("foodDisplay").textContent = "No food available! Add some options.";
+                return;
+            }
+            const randomFood = foods[Math.floor(Math.random() * foods.length)];
+            document.getElementById("foodDisplay").textContent = randomFood;
+        }
+        function addFood() {
+            const newFood = document.getElementById("newFood").value.trim();
+            if (newFood) {
+                foods.push(newFood);
+                document.getElementById("newFood").value = "";
+                updateFoodList();
+                alert(`${newFood} has been added to the list!`);
+            }
+        }
+        function removeFood(index) {
+            foods.splice(index, 1);
+            updateFoodList();
+        }
+        function clearFoods() {
+            foods = [];
+            document.getElementById("foodDisplay").textContent = "Food list cleared! Add new items.";
+            updateFoodList();
+            alert("Food list has been cleared!");
+        }
+        updateFoodList();
+    </script>
+</body>
+
+</html>
